@@ -43,6 +43,9 @@
   (define new-x player-x)
   (define new-y player-y)
 
+  ;; Set book-text to nil
+  (set! book-text nil)
+
   (if (key-pressed? 'left)  (set! new-x (- player-x 1)))
   (if (key-pressed? 'right) (set! new-x (+ player-x 1)))
   (if (key-pressed? 'up)    (set! new-y (- player-y 1)))
