@@ -6,6 +6,7 @@
 (define player-sprite 0)
 (define tile-size 16)
 (define music nil)
+(define book-text nil)
 
 ;; Find an object with a given property value
 (define (find-object-by-property objects key value)
@@ -47,6 +48,19 @@
   (if (key-pressed? 'up)    (set! new-y (- player-y 1)))
   (if (key-pressed? 'down)  (set! new-y (+ player-y 1)))
 
+  ;; Find if the player is below a book.
+  (let ((objects (map-objects room)))
+    (let ((book (find-object-by-property objects "type" "book")))
+      (if book
+        (do
+          (define book-x (/ (hash-get book "x") tile-size))
+          (define book-y (/ (hash-get book "y") tile-size))
+          (if (and
+                (= player-y (+ book-y 1))
+                (= player-x book-x))
+            (do
+              (set! book-text (hash-get book "text"))))))))
+
   ;; Only move if tile is walkable
   (if (tile-walkable? room new-x new-y)
       (do
@@ -63,4 +77,8 @@
   (draw-sprite room player-sprite (* player-x tile-size) (* player-y tile-size))
 
   ;; UI
-  (draw-text 10 400 "Arrow keys to move" color-white))
+  (draw-text 10 400 "Arrow keys to move" color-white)
+
+  (if book-text
+    (do
+      (draw-text 10 450 book-text color-white))))
