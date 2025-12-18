@@ -1,5 +1,4 @@
-;; Example Tiled-based game
-;; Requires: maps/test.tmx and associated tilesheet PNG
+;; Stillwater
 
 (define room nil)
 (define player-x 0)
@@ -22,7 +21,7 @@
   (play-music music)
 
   ;; Load the map - this also loads the tilesheet texture
-  (set! room (load-map "assets/maps/test.tmx"))
+  (set! room (load-map "assets/maps/stillwater.tmx"))
   (println "Map loaded:" room)
   (println "Map size:" (map-width room) "x" (map-height room))
 
