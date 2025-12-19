@@ -1,4 +1,6 @@
-;; Stillwater
+;; @title Stillwater
+;; @width 800
+;; @height 600
 
 (load "lib.wisp")
 (load "state.wisp")
