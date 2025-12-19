@@ -1,20 +1,7 @@
 ;; Stillwater
 
-(define room nil)
-(define player-x 0)
-(define player-y 0)
-(define player-sprite 0)
-(define tile-size 16)
-(define music nil)
-(define book-text nil)
-
-;; Find an object with a given property value
-(define (find-object-by-property objects key value)
-  (if (null? objects)
-      nil
-      (if (= (hash-get (car objects) key) value)
-          (car objects)
-          (find-object-by-property (cdr objects) key value))))
+(load "src/lib.wisp")
+(load "src/state.wisp")
 
 (define (init)
   ;; Load and play background music
@@ -43,8 +30,8 @@
   (define new-x player-x)
   (define new-y player-y)
 
-  ;; Set book-text to nil
-  (set! book-text nil)
+  ;; Set current-text to nil
+  (set! current-text nil)
 
   (if (key-pressed? 'left)  (set! new-x (- player-x 1)))
   (if (key-pressed? 'right) (set! new-x (+ player-x 1)))
@@ -52,17 +39,9 @@
   (if (key-pressed? 'down)  (set! new-y (+ player-y 1)))
 
   ;; Find if the player is below a book.
-  (let ((objects (map-objects room)))
-    (let ((book (find-object-by-property objects "type" "book")))
-      (if book
-        (do
-          (define book-x (/ (hash-get book "x") tile-size))
-          (define book-y (/ (hash-get book "y") tile-size))
-          (if (and
-                (= player-y (+ book-y 1))
-                (= player-x book-x))
-            (do
-              (set! book-text (hash-get book "text"))))))))
+  (let ((book (object-player-below "book")))
+    (if book
+      (set! current-text (hash-get book "text"))))
 
   ;; Only move if tile is walkable
   (if (tile-walkable? room new-x new-y)
@@ -82,6 +61,6 @@
   ;; UI
   (draw-text 10 400 "Arrow keys to move" color-white)
 
-  (if book-text
+  (if current-text
     (do
-      (draw-text 10 450 book-text color-white))))
+      (draw-text 10 450 current-text color-white))))

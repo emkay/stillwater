@@ -1,0 +1,7 @@
+(define room nil)
+(define player-x 0)
+(define player-y 0)
+(define player-sprite 0)
+(define tile-size 16)
+(define music nil)
+(define current-text nil)
