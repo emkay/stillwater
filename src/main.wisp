@@ -11,7 +11,7 @@
   (play-music music)
 
   ;; Load the map - this also loads the tilesheet texture
-  (set! room (load-map "../assets/maps/stillwater.tmx"))
+  (set! room (load-map "../assets/maps/stillwater.json"))
   (println "Map loaded:" room)
   (println "Map size:" (map-width room) "x" (map-height room))
 
