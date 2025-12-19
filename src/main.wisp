@@ -1,15 +1,15 @@
 ;; Stillwater
 
-(load "src/lib.wisp")
-(load "src/state.wisp")
+(load "lib.wisp")
+(load "state.wisp")
 
 (define (init)
   ;; Load and play background music
-  (set! music (load-sound "assets/audio/creepy-v1.ogg"))
+  (set! music (load-sound "../assets/audio/creepy-v1.ogg"))
   (play-music music)
 
   ;; Load the map - this also loads the tilesheet texture
-  (set! room (load-map "assets/maps/stillwater.tmx"))
+  (set! room (load-map "../assets/maps/stillwater.tmx"))
   (println "Map loaded:" room)
   (println "Map size:" (map-width room) "x" (map-height room))
 
